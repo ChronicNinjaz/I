@@ -1,0 +1,475 @@
+# For any help with configuration this plugin, please join this discord and a member of the team will give you a hand
+# https://discord.gg/JTsAS7U
+#
+# This plugin was developed by Chronic Ninjaz (Discord: ChronicNinjaz#0107)
+
+
+#####################
+# PERMISSION NODES  #
+#####################
+#
+# minion.player - use normal player commands
+# minion.admin  - user minion admin commands
+
+
+# Backpack limit - default size of the backpack limit.
+backpackLimit: 18
+
+# Default language that the user will use when interacting with minions.
+# Please ensure that this is the correct format and spelling of your language configuration section
+# Or else you will run into problems.
+defaultLanguage: English
+
+# This 'String' will be displayed as the name of the GUI that will open when the language selector gui is opened.
+LanguageSelectorGUIName: "&6&lLanguage Selector"
+
+StoreGUIName: "&6Minion Store"
+StoreGUIRows: 3
+
+Languages:
+  English:
+    displayItem: BOOK
+    displayName: "English"
+    displayLore:
+      - "&aSelect this to receive all messages in &eEnglish&a."
+
+    messages:
+      noPermission: "&7[!] &cYou do not have permission to use this command."
+      noMinions: "&7[!] &cPlease buy a minion before trying to enter your backpack."
+      newLanguageSelected: "&7[!] &aYou have successfully selected a new language."
+      adminNoMinions: "&7[!] &e%target% &chas no minions to view."
+      adminTargetNotOnline: "&7[!] &e%target% &cis not online, please try again later."
+      adminTargetReachedBackpackLimit: "&7[!] &e%target% &chas reached there backpack limit."
+      adminCouldntFindMinion: "&7[!] &cPlease enter a valid minion type."
+
+      playerHealedMinion: "&7[!] &aYou have successfully healed your minion."
+      playerMinionIsMaxHealth: "&7[!] &cSorry, this minion is already at its maximum health."
+
+      playerFedMinion: "&7[!] &aYou have successfully fed your minion."
+      playerMinionIsAtMaxHunger: "&7[!] &cSorry, this minion is already at its maximum hunger."
+
+      playerRenamedMinion: "&7[!] &aYou have successfully renamed your minion to %name%&a."
+      playerPickedUpMinion: "&7[!] &aYou have successfully picked up your minion."
+
+      playerPlacedMinion: "&7[!] &aYou have successfully placed your minion."
+
+      playerNotEnoughFunds: "&7[!] &cYou do not have enough funds to buy this!"
+      playerBoughtItem: "&7[!] &aYou have successfully bought this item!"
+
+
+      minionCommandHelpPage:
+        - "==========================================="
+        - "    minion, minions, m, robot, robots      "
+        - ""
+        - "minions help > - displays help page"
+        - "minions [bp|backpack] > - opens backpack   "
+        - "minions change language > - change language"
+        - "==========================================="
+
+      minionManagementCommandHelpPage:
+        - "=============================================================="
+        - "               admin, mm, minionmanager                       "
+        - ""
+        - "mm help > - displays help page"
+        - "mm give [OnlinePlayer] [miner|butcher|banker|healer]"
+        - "mm see [OnlinePlayer] > - opens target players backpack"
+        - "=============================================================="
+
+settings:
+  MinionSettings:
+    nameFormat: "%minion_name% Health: [%health%|%maximum_health%]"
+  BUTCHER:
+    targetInventory:
+      rows: 3
+      invenName: "[Butcher Target]"
+
+      contents:
+        1:
+          slot: 0
+          skullItem: ChronicNinjaz
+          cost: 500
+          type: ZOMBIE
+          permission: "minions.butcher.target.zombie"
+        2:
+          slot: 0
+          skullItem: ChronicNinjaz
+          cost: 500
+          type: SKELETON
+          permission: "minions.butcher.target.skeleton"
+  MINER:
+    blockBlackList:
+      - "GRASS"
+      - "STONE"
+  BANKER:
+    sellRadius: 10
+    prices:
+      diamond: 10
+
+Store:
+  0:
+    slot: 0
+    displayItem: PAPER
+    itemData: 0
+    displayName: "&6Miner Minion"
+    displayLore:
+      - "&6This minion automatically mines blocks for you. You may"
+      - "&6also link this minion to a chest which will allow you to"
+      - "&6gain profits while you afk."
+      - ""
+      - "&c[!] &6This minion loses &chealth &6& &chunger &6 and will"
+      - "&6die if both health & hunger reach zero, if this occurs the"
+      - "&6minion will be deleted from your backpack and you will need"
+      - "&6to buy a new one."
+    commands:
+      - "admin give %player% miner"
+    cost: 50000
+    enchanted: true
+  1:
+    slot: 1
+    displayItem: BOOK
+    itemData: 0
+    displayName: "&6Butcher Minion"
+    displayLore:
+      - "&6This minion will &cautomatically kill &6the target mpb type"
+      - "&6selected within the interface, this minion also collects exp"
+      - "&6when killing the mob which can be collected by the player at"
+      - "&6a later point. Players can also upgrade there minion for them"
+      - "&6to be able to collect more exp with cash, there is a total of"
+      - "&c5 levels &6that can be upgraded, each level adds a total of &c50 exp."
+      - ""
+      - "&c[!] &6This minion loses &chealth &6& &chunger &6 and will"
+      - "&6die if both health & hunger reach zero, if this occurs the"
+      - "&6minion will be deleted from your backpack and you will need"
+      - "&6to buy a new one."
+    commands:
+      - "admin give %player% BUTCHER"
+    cost: 100000
+    enchanted: true
+
+
+# Placeholders:
+#   Global:
+#
+#   Action: TURN_NORTH, TURN_SOUTH, TURN_WEST, TURN_EAST, HEAL, FEED, PICKUP, RENAME, COLOUR_NAME, CHANGE_SUIT, PLACE_HOLDER
+#
+Interface:
+  MINER:
+    inventoryRows: 4
+    inventoryName: "&8%player%'s Miner Minion"
+
+    contents:
+      0:
+        slot: 11
+        displayItem: POTION
+        data: 8197
+        displayName: "&e&lHeal"
+        displayLore:
+          - "&7"
+          - "   &6&l* &eHealth: &7%health%/%max_health%"
+          - "&e"
+          - "&eClick to heal this Minion."
+        cost: 0
+        action: HEAL
+      1:
+        slot: 12
+        displayItem: BREAD
+        displayName: "&e&lFeed"
+        displayLore:
+          - "&7"
+          - "   &6&l* &eHealth: &7%hunger%/%max_hunger%"
+          - "&e"
+          - "&eClick to feed this Minion."
+        cost: 0
+        action: FEED
+      2:
+        slot: 13
+        displayItem: HOPPER
+        displayName: "&e&lLink Chest"
+        displayLore:
+          - " "
+          - "&eWhen clicking this the menu will"
+          - "&eclose and you will have 30 seconds"
+          - "&eto click a chest that will store"
+          - "&ethe blocks mined by the minion."
+        cost: 0
+        action: LINK_CHEST
+      3:
+        slot: 14
+        displayItem: ENDER_CHEST
+        displayName: "&e&lPickup"
+        displayLore:
+          - "&7"
+          - "&eClick to pick up the minion and put"
+          - "&eit back into your minion backpack."
+        cost: 0
+        action: PICK_UP
+      4:
+        slot: 15
+        displayItem: LEATHER_CHESTPLATE
+        displayName: "&e&lChange Suit"
+        displayLore:
+          - "&7"
+          - "   &6&l* &eCurrent Suit: &7%suit%"
+          - "&7"
+          - "&eClick to change the suit"
+          - "&eyour minion is wearing."
+        cost: 0
+        action: CHANGE_SUIT
+      5:
+        slot: 19
+        skullItem: MHF_ArrowRight
+        displayName: "&e&lRotate Minion East"
+        displayLore:
+          - "&e"
+          - "&eClick to make your minion face &6&nEast"
+        cost: 0
+        action: TURN_EAST
+      6:
+        slot: 21
+        skullItem: MHF_ArrowLeft
+        displayName: "&e&lRotate Minion West"
+        displayLore:
+          - "&e"
+          - "&eClick to make your minion face &6&nWest"
+        cost: 0
+        action: TURN_WEST
+      9:
+        slot: 23
+        skullItem: MHF_ArrowUp
+        displayName: "&e&lRotate Minion North"
+        displayLore:
+          - "&e"
+          - "&eClick to make your minion face &6&nNorth"
+        cost: 0
+        action: TURN_NORTH
+      10:
+        slot: 25
+        skullItem: MHF_ArrowDown
+        displayName: "&e&lRotate Minion South"
+        displayLore:
+          - "&e"
+          - "&eClick to make your minion face &6&nSouth"
+        cost: 0
+        action: TURN_SOUTH
+  BUTCHER:
+    inventoryRows: 3
+    inventoryName: "%player%'s %minion_type% Minion"
+    contents:
+      0:
+        slot: 11
+        displayItem: POTION
+        data: 8197
+        displayName: "&e&lHeal"
+        displayLore:
+          - "&7"
+          - "   &6&l* &eHealth: &7%health%/%max_health%"
+          - "&e"
+          - "&eClick to heal this Minion."
+        cost: 0
+        action: HEAL
+      1:
+        slot: 12
+        displayItem: BREAD
+        displayName: "&e&lFeed"
+        displayLore:
+          - "&7"
+          - "   &6&l* &eHealth: &7%hunger%/%max_hunger%"
+          - "&e"
+          - "&eClick to feed this Minion."
+        cost: 0
+        action: FEED
+      2:
+        slot: 13
+        displayItem: HOPPER
+        displayName: "&e&lLink Chest"
+        displayLore:
+          - " "
+          - "&eWhen clicking this the menu will"
+          - "&eclose and you will have 30 seconds"
+          - "&eto click a chest that will store"
+          - "&ethe blocks mined by the minion."
+        cost: 0
+        action: LINK_CHEST
+      3:
+        slot: 14
+        displayItem: ENDER_CHEST
+        displayName: "&e&lPickup"
+        displayLore:
+          - "&7"
+          - "&eClick to pick up the minion and put"
+          - "&eit back into your minion backpack."
+        cost: 0
+        action: PICK_UP
+      4:
+        slot: 15
+        displayItem: LEATHER_CHESTPLATE
+        displayName: "&e&lChange Suit"
+        displayLore:
+          - "&7"
+          - "   &6&l* &eCurrent Suit: &7%suit%"
+          - "&7"
+          - "&eClick to change the suit"
+          - "&eyour minion is wearing."
+        cost: 0
+        action: CHANGE_SUIT
+      5:
+        slot: 19
+        skullItem: MHF_ArrowRight
+        displayName: "&e&lRotate Minion East"
+        displayLore:
+          - "&e"
+          - "&eClick to make your minion face &6&nEast"
+        cost: 0
+        action: TURN_EAST
+      6:
+        slot: 21
+        skullItem: MHF_ArrowLeft
+        displayName: "&e&lRotate Minion West"
+        displayLore:
+          - "&e"
+          - "&eClick to make your minion face &6&nWest"
+        cost: 0
+        action: TURN_WEST
+      9:
+        slot: 23
+        skullItem: MHF_ArrowUp
+        displayName: "&e&lRotate Minion North"
+        displayLore:
+          - "&e"
+          - "&eClick to make your minion face &6&nNorth"
+        cost: 0
+        action: TURN_NORTH
+      10:
+        slot: 25
+        skullItem: MHF_ArrowDown
+        displayName: "&e&lRotate Minion South"
+        displayLore:
+          - "&e"
+          - "&eClick to make your minion face &6&nSouth"
+        cost: 0
+        action: TURN_SOUTH
+      10:
+        slot: 17
+        displayItem: DIAMOND
+        displayName: "exp"
+        displayLore:
+          - "Lore CHANGE_SUIT"
+          - "Lore two"
+        cost: 0
+        action: WITHDRAW_BUTCHER_EXP
+      11:
+        slot: 18
+        displayItem: DIAMOND
+        displayName: "TURN_SOUTH"
+        displayLore:
+          - "Lore CHANGE_SUIT"
+          - "Lore two"
+        cost: 0
+        action: TURN_SOUTH
+      12:
+        slot: 19
+        displayItem: DIAMOND
+        displayName: "I CHANGE_TARGET care"
+        displayLore:
+          - "%butcher_level% cost: %butcher_upgrade_cost% exp collected: %butcher_exp_collected%"
+          - "exp limit: %butcher_exp_limit%"
+        cost: 0
+        action: CHANGE_TARGET
+  BANKER:
+    inventoryRows: 4
+    inventoryName: "&8%player%'s Miner Minion"
+
+    contents:
+      0:
+        slot: 11
+        displayItem: POTION
+        data: 8197
+        displayName: "&e&lHeal"
+        displayLore:
+          - "&7"
+          - "   &6&l* &eHealth: &7%health%/%max_health%"
+          - "&e"
+          - "&eClick to heal this Minion."
+        cost: 0
+        action: HEAL
+      1:
+        slot: 12
+        displayItem: BREAD
+        displayName: "&e&lFeed"
+        displayLore:
+          - "&7"
+          - "   &6&l* &eHealth: &7%hunger%/%max_hunger%"
+          - "&e"
+          - "&eClick to feed this Minion."
+        cost: 0
+        action: FEED
+      2:
+        slot: 13
+        displayItem: HOPPER
+        displayName: "&e&lLink Chest"
+        displayLore:
+          - " "
+          - "&eWhen clicking this the menu will"
+          - "&eclose and you will have 30 seconds"
+          - "&eto click a chest that will store"
+          - "&ethe blocks mined by the minion."
+        cost: 0
+        action: LINK_CHEST
+      3:
+        slot: 14
+        displayItem: ENDER_CHEST
+        displayName: "&e&lPickup"
+        displayLore:
+          - "&7"
+          - "&eClick to pick up the minion and put"
+          - "&eit back into your minion backpack."
+        cost: 0
+        action: PICK_UP
+      4:
+        slot: 15
+        displayItem: LEATHER_CHESTPLATE
+        displayName: "&e&lChange Suit"
+        displayLore:
+          - "&7"
+          - "   &6&l* &eCurrent Suit: &7%suit%"
+          - "&7"
+          - "&eClick to change the suit"
+          - "&eyour minion is wearing."
+        cost: 0
+        action: CHANGE_SUIT
+      5:
+        slot: 19
+        skullItem: MHF_ArrowRight
+        displayName: "&e&lRotate Minion East"
+        displayLore:
+          - "&e"
+          - "&eClick to make your minion face &6&nEast"
+        cost: 0
+        action: TURN_EAST
+      6:
+        slot: 21
+        skullItem: MHF_ArrowLeft
+        displayName: "&e&lRotate Minion West"
+        displayLore:
+          - "&e"
+          - "&eClick to make your minion face &6&nWest"
+        cost: 0
+        action: TURN_WEST
+      9:
+        slot: 23
+        skullItem: MHF_ArrowUp
+        displayName: "&e&lRotate Minion North"
+        displayLore:
+          - "&e"
+          - "&eClick to make your minion face &6&nNorth"
+        cost: 0
+        action: TURN_NORTH
+      10:
+        slot: 25
+        skullItem: MHF_ArrowDown
+        displayName: "&e&lRotate Minion South"
+        displayLore:
+          - "&e"
+          - "&eClick to make your minion face &6&nSouth"
+        cost: 0
+        action: TURN_SOUTH

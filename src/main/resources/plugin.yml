@@ -1,0 +1,7 @@
+name: Minions
+main: com.chronicninjazdevelopments.Minions
+version: 2.1.4
+author: ChronicNinjaz
+prefix: minions
+website: https://www.spigotmc.org/resources/minions.46742/
+depend: [Vault]
